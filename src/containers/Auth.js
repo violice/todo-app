@@ -8,7 +8,11 @@ const AuthContainer = ({ history }) => {
   const [username, setUsername] = useState('user');
   const [password, setPassword] = useState('randompassword');
   const { isLoading, error, run } = useAsync({
-    deferFn: authApi.auth, onResolve: () => history.replace('/'),
+    deferFn: authApi.auth,
+    onResolve: ({ token }) => {
+      localStorage.setItem('token', token);
+      history.replace('/');
+    },
   });
 
   return (

@@ -11,9 +11,9 @@ const App = () => {
     <>
       <Header />
       <Switch>
-        {!document.cookie.includes('todo-app-token') && <Redirect exact from="/" to="auth" />}
-        <Route exact path="/" component={TasksContainer} />
         <Route path="/auth" component={AuthContainer} />
+        <Route path="/" component={TasksContainer} />
+        {!localStorage.getItem('token') && <Redirect from="/" to="auth" />}
       </Switch>
     </>
   );

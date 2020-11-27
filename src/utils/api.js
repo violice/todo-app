@@ -15,26 +15,34 @@ const createStringParams = (params = {}) => {
   return `?${stringParams}`;
 };
 
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-}
+const createConfig = () => {
+  const token = localStorage.getItem('token');
+  return {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  };
+};
 
 const throwError = (response) => {
   if (response) {
-    const { status, data: { error, message } } = response;
-    const err = { code: status, message: error || message, responce: true };
+    const { status, data: { error } } = response;
+    if (status === 403) {
+      localStorage.removeItem('token');
+      window.location.pathname = '/auth';
+    }
+    const err = { code: status, message: error, responce: true };
     throw err;
   }
-  const err = { message: 'Сервер недоступен' };
+  const err = { message: 'Server unavailable' };
   throw err;
 };
 
 const api = {
   get: async (url, params) => {
     try {
-      const { data } = await AxiosInstance.get(`${url}${createStringParams(params)}`, config);
+      const { data } = await AxiosInstance.get(`${url}${createStringParams(params)}`, createConfig());
       if (data.error) {
         throw { response: { data } };
       }
@@ -45,7 +53,7 @@ const api = {
   },
   post: async (url, body) => {
     try {
-      const { data } = await AxiosInstance.post(url, body, config);
+      const { data } = await AxiosInstance.post(url, body, createConfig());
       if (data.error) {
         throw { response: { data } };
       }
@@ -56,7 +64,7 @@ const api = {
   },
   put: async (url, body) => {
     try {
-      const { data } = await AxiosInstance.put(url, body, config);
+      const { data } = await AxiosInstance.put(url, body, createConfig());
       return data;
     } catch ({ response }) {
       return throwError(response);
@@ -64,7 +72,7 @@ const api = {
   },
   delete: async (url) => {
     try {
-      const { data } = await AxiosInstance.delete(url, config);
+      const { data } = await AxiosInstance.delete(url, createConfig());
       return data;
     } catch ({ response }) {
       return throwError(response);
