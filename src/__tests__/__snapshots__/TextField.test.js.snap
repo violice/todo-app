@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="textFieldContainer-0-2-1"
+  >
+    <label
+      class="textFieldLabel-0-2-2"
+    />
+    <input
+      class="textField-0-2-3"
+      name="username"
+      value="test text"
+    />
+  </div>
+</DocumentFragment>
+`;
