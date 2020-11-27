@@ -8,14 +8,14 @@ const reducer = (state, action) => {
   switch (action.type) {
     case 'UPDATE_STORE': {
       const newState = { ...state, ...action.payload };
-      const storeKeys = Object.keys(newState);
-      if (storeKeys.length > 0) {
-        console.group('%cStore Updated', 'color:#00873D');
-        storeKeys.forEach((key) => {
-          console.log(`%c${key}`, 'font-weight:bold', newState[key]);
-        });
-        console.groupEnd();
-      }
+      // const storeKeys = Object.keys(newState);
+      // if (storeKeys.length > 0) {
+      //   console.group('%cStore Updated', 'color:#00873D');
+      //   storeKeys.forEach((key) => {
+      //     console.log(`%c${key}`, 'font-weight:bold', newState[key]);
+      //   });
+      //   console.groupEnd();
+      // }
       return newState;
     }
     default:
