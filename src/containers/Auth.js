@@ -5,8 +5,8 @@ import { AuthForm } from 'components';
 import { authApi } from 'api';
 
 const AuthContainer = ({ history }) => {
-  const [username, setUsername] = useState('user');
-  const [password, setPassword] = useState('randompassword');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const { isLoading, error, run } = useAsync({
     deferFn: authApi.auth,
     onResolve: ({ token }) => {

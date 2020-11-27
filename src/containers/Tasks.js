@@ -18,7 +18,10 @@ const TasksContainer = () => {
   });
   const { isLoading: isTaskCreating, error: taskCreatingError, run: createTask } = useAsync({
     deferFn: taskApi.createTask,
-    onResolve: (newTask) => setStore({ tasks: [...tasks, newTask] }),
+    onResolve: (newTask) => {
+      setStore({ tasks: [...tasks, newTask] });
+      setCreatedTask({ body: '', title: '' });
+    },
   });
   const { isLoading: isTaskEditing, error: taskEditingError, run: editTask } = useAsync({
     deferFn: taskApi.editTask,
